@@ -19,18 +19,22 @@ class StatesPublisher(threading.Thread):
 
 		self.joint_state_msg = JointState()
 		self.joint_state_msg.name = []
-		self.joint_state_msg.name.append("gripper_claws")
-		self.joint_states_publisher = rospy.Publisher('joint_states', JointState, queue_size=10)
+		self.joint_state_msg.name.append(
+			"ur5_weiss_ieg76_jaw_position")  # TODO use parameter
+		self.joint_states_publisher = rospy.Publisher(
+			'joint_states', JointState, queue_size=10)
 
 		self.updater = diagnostic_updater.Updater()
-		self.updater.setHardwareID("Weiss Robotics Gripper IEG 76-030 V1.02 SN 000106")
+		self.updater.setHardwareID(
+			"Weiss Robotics Gripper IEG 76-030 V1.02 SN 000106")
 		self.updater.add("Position and flags updater", self.produce_diagnostics)
-		freq_bounds = {'min':0.5, 'max':2}
+		freq_bounds = {'min': 0.5, 'max': 2}
 		# It publishes the messages and simultaneously makes diagnostics for the topic "joint_states" using a FrequencyStatus and TimeStampStatus
 		self.pub_freq_time_diag = diagnostic_updater.DiagnosedPublisher(self.joint_states_publisher,
-																		self.updater,
-																		diagnostic_updater.FrequencyStatusParam(freq_bounds, 0.1, 10),
-																		diagnostic_updater.TimeStampStatusParam())
+                                                                  self.updater,
+                                                                  diagnostic_updater.FrequencyStatusParam(
+                                                                  	freq_bounds, 0.1, 10),
+                                                                  diagnostic_updater.TimeStampStatusParam())
 
 	def shutdown(self):
 		self.driver_shutdown = True
@@ -66,7 +70,8 @@ class StatesPublisher(threading.Thread):
 		stat.add("Holding Flag", self.current_flags_dict["HOLDING_FLAG"])
 		stat.add("Error Flag", self.current_flags_dict["FAULT_FLAG"])
 		stat.add("Temperature Error Flag", self.current_flags_dict["TEMPFAULT_FLAG"])
-		stat.add("Temperature Warning Flag", self.current_flags_dict["TEMPWARN_FLAG"])
+		stat.add("Temperature Warning Flag",
+		         self.current_flags_dict["TEMPWARN_FLAG"])
 		stat.add("Maintenance Flag", self.current_flags_dict["MAINT_FLAG"])
 		return stat
 

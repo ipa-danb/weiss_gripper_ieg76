@@ -153,11 +153,14 @@ include_directories(
 # all install targets should use catkin DESTINATION variables
 # See http://ros.org/doc/api/catkin/html/adv_user_guide/variables.html
 
-catkin_install_python(PROGRAMS src/driver.py
-                               src/test_client.py
-                      DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+# catkin_install_python(PROGRAMS src/driver.py
+#                               src/test_client.py
+#                               src/driver_logic.py
+#                               src/serial_comm.py
+#                               src/state_publisher.py
+#                      DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
-install(DIRECTORY launch urdf DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
+# install(DIRECTORY launch urdf DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
 
 #############
 ## Testing ##
